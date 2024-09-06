@@ -16,7 +16,11 @@ export function Validator<T>(
       `Applying Validator to ${String(propertyKey)} at index ${parameterIndex}`
     );
     const validators: ValidatorMetadata[] =
-      Reflect.getMetadata(PARAM_VALIDATORS_KEY, target, propertyKey as string) || [];
+      Reflect.getMetadata(
+        PARAM_VALIDATORS_KEY,
+        target,
+        propertyKey as string
+      ) || [];
 
     const validator = (value: any) => {
       const validatorInstance =

@@ -1,5 +1,5 @@
 import "reflect-metadata";
-import { Validate, Validator, IsNumber, IsString } from '../src';
+import { Validate, Validator, IsNumber, IsString } from '../dist';
 import { IsEmail, IsNotEmpty } from "class-validator";
 
 class DataDto {

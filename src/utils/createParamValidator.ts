@@ -18,7 +18,11 @@ export function createParamValidator(
         )} at index ${parameterIndex}`
       );
       const validators: ValidatorMetadata[] =
-        Reflect.getMetadata(PARAM_VALIDATORS_KEY, target, propertyKey as string) || [];
+        Reflect.getMetadata(
+          PARAM_VALIDATORS_KEY,
+          target,
+          propertyKey as string
+        ) || [];
       validators.push({ index: parameterIndex, validator, message });
       Reflect.defineMetadata(
         PARAM_VALIDATORS_KEY,
