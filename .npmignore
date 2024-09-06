@@ -3,4 +3,4 @@ examples
 tsconfig.json
 .gitignore
 .npmignore
-/img
+/assets
