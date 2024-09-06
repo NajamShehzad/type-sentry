@@ -12,7 +12,7 @@ Key benefits:
 - 🔧 Flexible: Works with simple types and complex objects
 - 🎨 Customizable: Create your own decorators with ease
 
-[![npm version](https://badge.fury.io/js/typesentry.svg)](https://badge.fury.io/js/type-sentry)
+[![npm version](https://badge.fury.io/js/type-sentry.svg)](https://badge.fury.io/js/type-sentry)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Features
@@ -33,7 +33,7 @@ Key benefits:
 For basic type checking and custom decorators, you only need to install TypeSentry:
 
 ```bash
-npm install typesentry
+npm install type-sentry
 ```
 
 ### Advanced Usage with class-validator
@@ -41,7 +41,7 @@ npm install typesentry
 If you want to use complex object validation with class-validator, install TypeSentry and its peer dependencies:
 
 ```bash
-npm install typesentry class-validator class-transformer
+npm install type-sentry class-validator class-transformer
 ```
 
 ### Configuration
@@ -81,7 +81,7 @@ This import is crucial for the decorators to work properly. Make sure it's impor
 
 ```typescript
 import "reflect-metadata";
-import { Validate, IsNumber, IsString } from 'typesentry';
+import { Validate, IsNumber, IsString } from 'type-sentry';
 
 class UserService {
   @Validate()
@@ -99,7 +99,7 @@ userService.createUser("30", "John Doe"); // Throws a validation error
 
 ```typescript
 import "reflect-metadata";
-import { Validate, Validator } from 'typesentry';
+import { Validate, Validator } from 'type-sentry';
 import { IsEmail, Length, IsDate, MaxDate } from 'class-validator';
 
 class UserDto {
@@ -141,7 +141,7 @@ TypeSentry now supports both direct class references and factory functions for d
 
 ```typescript
 import "reflect-metadata";
-import { Validate, Validator } from 'typesentry';
+import { Validate, Validator } from 'type-sentry';
 import { IsEmail, Length } from 'class-validator';
 
 // Define your DTO
@@ -176,7 +176,7 @@ You can create custom validators using the `createParamValidator` function:
 
 ```typescript
 import "reflect-metadata";
-import { createParamValidator, Validate } from 'typesentry';
+import { createParamValidator, Validate } from 'type-sentry';
 
 const IsPositive = createParamValidator(
   (value) => typeof value === 'number' && value > 0,
