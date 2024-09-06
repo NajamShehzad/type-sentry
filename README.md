@@ -27,11 +27,23 @@ Key benefits:
 
 ## Installation
 
-Install TypeSentry and its peer dependencies using npm:
+### Basic Usage
+
+For basic type checking and custom decorators, you only need to install TypeSentry:
 
 ```bash
-npm install typesentry class-validator class-transformer reflect-metadata
+npm install typesentry
 ```
+
+### Advanced Usage with class-validator
+
+If you want to use complex object validation with class-validator, install TypeSentry and its peer dependencies:
+
+```bash
+npm install typesentry class-validator class-transformer
+```
+
+### Configuration
 
 Make sure to enable experimental decorators and metadata reflection in your `tsconfig.json`:
 
@@ -43,6 +55,12 @@ Make sure to enable experimental decorators and metadata reflection in your `tsc
   }
 }
 ```
+
+### Note on Dependencies
+
+- Creating custom decorators does not require any additional dependencies beyond TypeSentry itself.
+- `class-validator` and `class-transformer` are only necessary if you're using complex object validation features.
+
 
 ## Usage
 
