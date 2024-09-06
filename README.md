@@ -1,6 +1,7 @@
 # TypeSentry
 
 ![TypeSentry Logo](img/logo.png)
+
 TypeSentry is a lightweight yet powerful TypeScript library for runtime type checking and validation using decorators. It offers a simple and intuitive API for validating method parameters and complex objects, enhancing the robustness and reliability of your TypeScript applications without adding unnecessary bulk to your project. With TypeSentry, you can easily create your own custom decorators, allowing for maximum flexibility and extensibility.
 
 Key benefits:
