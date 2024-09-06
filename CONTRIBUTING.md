@@ -4,7 +4,7 @@ First off, thank you for considering contributing to TypeSentry! It's people lik
 
 ## Code of Conduct
 
-By participating in this project, you are expected to uphold our Code of Conduct. Please report unacceptable behavior to [project_email@example.com].
+By participating in this project, you are expected to uphold our Code of Conduct. Please be respectful and considerate of others. Unacceptable behavior will not be tolerated.
 
 ## How Can I Contribute?
 
@@ -26,19 +26,19 @@ This section guides you through submitting an enhancement suggestion for TypeSen
 
 ### Your First Code Contribution
 
-Unsure where to begin contributing to TypeSentry? You can start by looking through these `beginner` and `help-wanted` issues:
-
-- [Beginner issues](https://github.com/NajamShehzad/type-sentry/labels/beginner) - issues which should only require a few lines of code, and a test or two.
-- [Help wanted issues](https://github.com/NajamShehzad/type-sentry/labels/help%20wanted) - issues which should be a bit more involved than `beginner` issues.
+Unsure where to begin contributing to TypeSentry? You can start by looking through the existing issues in our GitHub repository. Look for issues that are good for first-time contributors or areas where help is needed.
 
 ### Pull Requests
 
-- Fill in the required template
-- Do not include issue numbers in the PR title
+When submitting a pull request:
+
+- Provide a clear and descriptive title
+- Include a detailed description of the changes
+- Reference any related issues in the description
 - Follow the TypeScript styleguide
-- Include thoughtfully-worded, well-structured tests
-- Document new code based on the Documentation Styleguide
-- End all files with a newline
+- Include tests that cover your changes
+- Update documentation as necessary
+- Ensure all tests pass before submitting
 
 ## Styleguides
 
@@ -68,16 +68,5 @@ Unsure where to begin contributing to TypeSentry? You can start by looking throu
     - Reference classes with `{ClassName}`
     - Reference instance methods with `{ClassName.methodName}`
     - Reference class methods with `{ClassName.methodName}`
-
-## Additional Notes
-
-### Issue and Pull Request Labels
-
-This section lists the labels we use to help us track and manage issues and pull requests.
-
-* `bug` - Issues for bugs in the code
-* `enhancement` - Issues for new features or improvements
-* `documentation` - Issues related to documentation
-* `help-wanted` - Issues where we need help from the community
 
 Thank you for contributing to TypeSentry!
