@@ -12,11 +12,6 @@ export function createParamValidator(
       propertyKey: string | symbol | undefined,
       parameterIndex: number
     ) => {
-      console.log(
-        `Applying param validator to ${String(
-          propertyKey
-        )} at index ${parameterIndex}`
-      );
       const validators: ValidatorMetadata[] =
         Reflect.getMetadata(
           PARAM_VALIDATORS_KEY,

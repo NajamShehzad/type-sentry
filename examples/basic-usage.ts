@@ -1,5 +1,5 @@
 import "reflect-metadata";
-import { Validate, Validator, IsNumber, IsString } from '../dist';
+import { Validate, Validator, IsNumber, IsString } from '../src';
 import { IsEmail, IsNotEmpty } from "class-validator";
 
 class DataDto {
@@ -11,8 +11,8 @@ class DataDto {
 class ExampleClass {
   @Validate()
   exampleMethod(
-    @IsNumber() num: number,
-    @IsString("Custom string message") str: string
+    @IsNumber() num,
+    @IsString("Custom string message") str
   ) {
     console.log(`Received: number = ${num}, string = ${str}`);
     return `${num} - ${str}`;

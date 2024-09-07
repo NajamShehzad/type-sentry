@@ -8,12 +8,10 @@ export function Validate(): MethodDecorator {
     propertyKey: string | symbol,
     descriptor: PropertyDescriptor
   ) => {
-    console.log(`Applying Validate decorator to method ${String(propertyKey)}`);
     Reflect.defineMetadata(VALIDATE_METHOD_KEY, true, target, propertyKey);
 
     const originalMethod = descriptor.value;
     descriptor.value = function (...args: any[]) {
-      console.log(`Validating method ${String(propertyKey)}`);
       const validators: ValidatorMetadata[] =
         Reflect.getMetadata(PARAM_VALIDATORS_KEY, target, propertyKey) || [];
 
