@@ -1,6 +1,6 @@
 {
     "name": "type-sentry",
-    "version": "0.0.5",
+    "version": "0.0.6",
     "description": "A powerful TypeScript library for runtime type checking and validation using decorators",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
