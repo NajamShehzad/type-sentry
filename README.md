@@ -18,27 +18,20 @@ Key benefits:
 ## Features
 
 - 🛡️ Runtime type checking for method parameters
-- 🏗️ Complex object validation using class-validator
 - 🎨 Built-in decorators for common validations
 - 🔧 Customizable validation messages
 - 🚀 Seamless integration with existing TypeScript projects
-- 🔄 Flexible validator definition with support for classes and factory functions
 - 🛠️ Easy creation of custom decorators for unique validation needs
+- 🏗️ Complex object validation using class-validator
 - 🔍 Lightweight core with optional integration of powerful validation libraries
 
 ## Installation
-
-### Basic Usage
-
-For basic type checking and custom decorators, you only need to install TypeSentry:
 
 ```bash
 npm install type-sentry
 ```
 
-### Advanced Usage with class-validator
-
-If you want to use complex object validation with class-validator, install TypeSentry and its peer dependencies:
+For complex object validation with class-validator:
 
 ```bash
 npm install type-sentry class-validator class-transformer
@@ -46,41 +39,21 @@ npm install type-sentry class-validator class-transformer
 
 ### Configuration
 
-Make sure to enable experimental decorators and metadata reflection in your `tsconfig.json`:
+Enable experimental decorators in your `tsconfig.json`:
 
 ```json
 {
   "compilerOptions": {
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
+    "experimentalDecorators": true
   }
 }
 ```
 
-### Note on Dependencies
-
-- Creating custom decorators does not require any additional dependencies beyond TypeSentry itself.
-- `class-validator` and `class-transformer` are only necessary if you're using complex object validation features.
-
-
 ## Usage
-
-### Important: Importing reflect-metadata
-
-Before using TypeSentry in your application, you need to import `reflect-metadata` at the entry point of your application (e.g., `index.ts` or `app.ts`):
-
-```typescript
-import "reflect-metadata";
-
-// ... rest of your application code
-```
-
-This import is crucial for the decorators to work properly. Make sure it's imported only once in your entire application, and it should be one of the first imports.
 
 ### Basic Usage
 
 ```typescript
-import "reflect-metadata";
 import { Validate, IsNumber, IsString } from 'type-sentry';
 
 class UserService {
@@ -95,10 +68,35 @@ userService.createUser(30, "John Doe"); // Works fine
 userService.createUser("30", "John Doe"); // Throws a validation error
 ```
 
-### Complex Object Validation
+### Custom Validators
+
+One of TypeSentry's most powerful features is the ability to create custom validators:
 
 ```typescript
-import "reflect-metadata";
+import { createParamValidator, Validate } from 'type-sentry';
+
+const IsPositive = createParamValidator(
+  (value) => typeof value === 'number' && value > 0,
+  "Must be a positive number"
+);
+
+class MathService {
+  @Validate()
+  calculateSquareRoot(@IsPositive() num: number) {
+    return Math.sqrt(num);
+  }
+}
+
+const mathService = new MathService();
+mathService.calculateSquareRoot(16); // Works fine
+mathService.calculateSquareRoot(-4); // Throws a validation error
+```
+
+### Complex Object Validation
+
+For more advanced scenarios, TypeSentry integrates with class-validator:
+
+```typescript
 import { Validate, Validator } from 'type-sentry';
 import { IsEmail, Length, IsDate, MaxDate } from 'class-validator';
 
@@ -137,14 +135,12 @@ userService.registerUser({
 
 ### Flexible Validator Definition
 
-TypeSentry now supports both direct class references and factory functions for defining validators. This is particularly useful for avoiding circular dependencies or when dealing with classes that aren't fully defined at decoration time.
+TypeSentry supports both direct class references and factory functions for defining validators. This is particularly useful for avoiding circular dependencies or when dealing with classes that aren't fully defined at decoration time.
 
 ```typescript
-import "reflect-metadata";
 import { Validate, Validator } from 'type-sentry';
 import { IsEmail, Length } from 'class-validator';
 
-// Define your DTO
 class UserDto {
   @IsEmail()
   email: string;
@@ -164,29 +160,6 @@ class UserService {
   @Validate()
   updateUser(@Validator(() => UserDto) user: UserDto) {
     console.log(`Updating user: ${user.email}`);
-  }
-}
-```
-
-In the example above, both `registerUser` and `updateUser` methods use the `UserDto` for validation, but `updateUser` uses a factory function. This can be beneficial in scenarios with circular dependencies or when you need to defer the resolution of the validator class.
-
-### Custom Validators
-
-You can create custom validators using the `createParamValidator` function:
-
-```typescript
-import "reflect-metadata";
-import { createParamValidator, Validate } from 'type-sentry';
-
-const IsPositive = createParamValidator(
-  (value) => typeof value === 'number' && value > 0,
-  "Must be a positive number"
-);
-
-class MathService {
-  @Validate()
-  calculateSquareRoot(@IsPositive() num: number) {
-    return Math.sqrt(num);
   }
 }
 ```
