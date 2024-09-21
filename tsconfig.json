@@ -13,7 +13,6 @@
     "strict": true,
     "noImplicitAny": false,
     "strictNullChecks": true,
-    "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "strictFunctionTypes": true,
     "strictPropertyInitialization": false,

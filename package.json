@@ -27,12 +27,10 @@
       "url": "https://github.com/NajamShehzad/type-sentry/issues"
     },
     "homepage": "https://github.com/NajamShehzad/type-sentry#readme",
-    "dependencies": {
-      "reflect-metadata": "^0.1.13",
+    "peerDependencies": {
       "class-validator": "^0.14.0",
       "class-transformer": "^0.5.1"
     },
-  
     "devDependencies": {
       "@types/jest": "^27.5.2",
       "@types/node": "^16.11.12",

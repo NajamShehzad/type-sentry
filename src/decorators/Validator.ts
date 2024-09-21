@@ -1,8 +1,8 @@
 import "reflect-metadata";
 import { plainToClass } from "class-transformer";
 import { validateSync } from "class-validator";
-import { PARAM_VALIDATORS_KEY } from "../core/metadata";
-import { ClassOrFactory, ValidatorMetadata } from "../types";
+import { paramValidatorsMap } from "../core/metadata";
+import { ClassOrFactory, Constructor, ValidatorFunction, ValidatorMetadata } from "../types";
 
 export function Validator<T>(
   validatorClass: ClassOrFactory<T>
@@ -12,18 +12,18 @@ export function Validator<T>(
     propertyKey: string | symbol | undefined,
     parameterIndex: number
   ) => {
-    const validators: ValidatorMetadata[] =
-      Reflect.getMetadata(
-        PARAM_VALIDATORS_KEY,
-        target,
-        propertyKey as string
-      ) || [];
+    let methodValidators = paramValidatorsMap.get(target);
+    if (!methodValidators) {
+      methodValidators = new Map<string | symbol, ValidatorMetadata[]>();
+      paramValidatorsMap.set(target, methodValidators);
+    }
+    let validators = methodValidators.get(propertyKey as string) || [];
 
-    const validator = (value: any) => {
+    const validator: ValidatorFunction = (value: any) => {
       const validatorInstance =
         typeof validatorClass === "function" && !validatorClass.prototype
-          ? (validatorClass as () => new () => T)()
-          : (validatorClass as new () => T);
+          ? (validatorClass as () => Constructor<T>)()
+          : (validatorClass as Constructor<T>);
       const classObject = plainToClass(validatorInstance, value) as object;
 
       const errors = validateSync(classObject);
@@ -44,11 +44,6 @@ export function Validator<T>(
       message: `Validation failed for ${validatorClass.name}`,
     });
 
-    Reflect.defineMetadata(
-      PARAM_VALIDATORS_KEY,
-      validators,
-      target,
-      propertyKey as string
-    );
+    methodValidators.set(propertyKey as string, validators);
   };
 }

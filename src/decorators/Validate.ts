@@ -1,5 +1,4 @@
-import "reflect-metadata";
-import { PARAM_VALIDATORS_KEY, VALIDATE_METHOD_KEY } from "../core/metadata";
+import {  paramValidatorsMap } from "../core/metadata";
 import { ValidatorMetadata } from "../types";
 
 export function Validate(): MethodDecorator {
@@ -8,13 +7,14 @@ export function Validate(): MethodDecorator {
     propertyKey: string | symbol,
     descriptor: PropertyDescriptor
   ) => {
-    Reflect.defineMetadata(VALIDATE_METHOD_KEY, true, target, propertyKey);
 
     const originalMethod = descriptor.value;
     descriptor.value = function (...args: any[]) {
-      const validators: ValidatorMetadata[] =
-        Reflect.getMetadata(PARAM_VALIDATORS_KEY, target, propertyKey) || [];
-
+      let methodValidators = paramValidatorsMap.get(target);
+      let validators: ValidatorMetadata[] = [];
+      if (methodValidators) {
+        validators = methodValidators.get(propertyKey) || [];
+      }
       validators.forEach(({ index, validator, message }) => {
         if (index < args.length && !validator(args[index])) {
           throw new Error(

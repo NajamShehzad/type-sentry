@@ -1,6 +1,10 @@
-import "reflect-metadata";
-import { Validate, Validator, IsNumber, IsString } from '../src';
+import { Validate, Validator, IsNumber, IsString, createParamValidator } from '../src';
 import { IsEmail, IsNotEmpty } from "class-validator";
+
+const IsPositiveNumber  = createParamValidator(
+  (value: any) => typeof value === "number" && value > 0,
+  "Value must be a positive number"
+);
 
 class DataDto {
   @IsNotEmpty()
@@ -22,6 +26,12 @@ class ExampleClass {
   exampleMethod2(@Validator(() => DataDto) data: DataDto) {
     console.log(`Received: data = ${JSON.stringify(data)}`);
     return data;
+  }
+
+  @Validate()
+  exampleMethod3(@IsPositiveNumber() num) {
+    console.log(`Received: number = ${num}`);
+    return num;
   }
 }
 
@@ -56,5 +66,17 @@ try {
     } as DataDto)
   ); // Should throw an error
 } catch (error: any) {
+  console.log("Caught error:", error.message);
+}
+
+console.log("\nTesting exampleMethod3:");
+console.log("Calling with valid arguments:");
+console.log(instance.exampleMethod3(42)); // Should work
+
+console.log("\nCalling with invalid arguments:");
+try {
+  console.log(instance.exampleMethod3(-1)); // Should throw an error
+}
+catch (error: any) {
   console.log("Caught error:", error.message);
 }

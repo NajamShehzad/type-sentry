@@ -1,2 +1,6 @@
-export const PARAM_VALIDATORS_KEY = Symbol("paramValidators");
-export const VALIDATE_METHOD_KEY = Symbol("validateMethod");
+import { ValidatorMetadata } from "../types";
+
+export const paramValidatorsMap = new WeakMap<
+  Object,
+  Map<string | symbol, ValidatorMetadata[]>
+>();

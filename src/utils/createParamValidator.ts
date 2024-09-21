@@ -1,5 +1,4 @@
-import "reflect-metadata";
-import { PARAM_VALIDATORS_KEY } from "../core/metadata";
+import { paramValidatorsMap } from "../core/metadata";
 import { ValidatorFunction, ValidatorMetadata } from "../types";
 
 export function createParamValidator(
@@ -12,19 +11,21 @@ export function createParamValidator(
       propertyKey: string | symbol | undefined,
       parameterIndex: number
     ) => {
-      const validators: ValidatorMetadata[] =
-        Reflect.getMetadata(
-          PARAM_VALIDATORS_KEY,
-          target,
-          propertyKey as string
-        ) || [];
-      validators.push({ index: parameterIndex, validator, message });
-      Reflect.defineMetadata(
-        PARAM_VALIDATORS_KEY,
-        validators,
-        target,
-        propertyKey as string
+      console.log(
+        `Applying param validator to ${String(
+          propertyKey
+        )} at index ${parameterIndex}`
       );
+
+      let methodValidators = paramValidatorsMap.get(target);
+      if (!methodValidators) {
+        methodValidators = new Map<string | symbol, ValidatorMetadata[]>();
+        paramValidatorsMap.set(target, methodValidators);
+      }
+
+      let validators = methodValidators.get(propertyKey as string) || [];
+      validators.push({ index: parameterIndex, validator, message });
+      methodValidators.set(propertyKey as string, validators);
     };
   };
 }
